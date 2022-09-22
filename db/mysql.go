@@ -1,4 +1,4 @@
-package controllers
+package db
 
 import (
 	"fmt"
@@ -41,15 +41,11 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 			fmt.Printf("We are connected to the %s database", Dbdriver)
 		}
 	}
-
-	//server.DB.Debug().AutoMigrate(&models.User{}, &models.Post{}) //database migration
-
+	//server.Router = mux.NewRouter()
 	server.Router = mux.NewRouter()
-
-	server.initializeRoutes()
+	//server.DB.Debug().AutoMigrate(&models.User{}, &models.Post{}) //database migration
 }
-
 func (server *Server) Run(addr string) {
-	fmt.Println("Listening to port 8080")
+	fmt.Printf("Listening to port 8080")
 	log.Fatal(http.ListenAndServe(addr, server.Router))
 }

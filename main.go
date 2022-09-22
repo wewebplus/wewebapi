@@ -1,6 +1,6 @@
 package main
 
-import "github.com/wewebplus/wewebapi/api"
+import api "github.com/wewebplus/wewebapi/api"
 
 func main() {
 	api.Run()
