@@ -1,38 +1,32 @@
-package handler
+package controller
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
 
+	"github.com/labstack/echo"
+	"github.com/labstack/gommon/log"
 	"github.com/wewebplus/wewebapi/auth"
-	"github.com/wewebplus/wewebapi/core/models"
-	"github.com/wewebplus/wewebapi/core/types"
+	"github.com/wewebplus/wewebapi/models"
 	"github.com/wewebplus/wewebapi/responses"
+	"github.com/wewebplus/wewebapi/types"
 	"github.com/wewebplus/wewebapi/utils/formaterror"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func Login(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
-	}
+func (server *Server) Login(c echo.Context) error {
 	user := types.SysStf{}
-	err = json.Unmarshal(body, &user)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
+	if err := c.Bind(&user); err != nil {
+		log.Error(err)
+		return c.JSON(http.StatusBadRequest, responses.ParseStatus("REQ_ERR", ""))
 	}
 
 	models.Prepare(&user)
-	err = models.Validate(&user, "login")
+	err := models.Validate(&user, "login")
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
 	}
-	token, err := SignIn(user.SyStfUsername, user.SyStfPassword)
+	token, err := server.SignIn(user.SyStfUsername, user.SyStfPassword)
 	if err != nil {
 		formattedError := formaterror.FormatError(err.Error())
 		responses.ERROR(w, http.StatusUnprocessableEntity, formattedError)
@@ -41,7 +35,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	responses.JSON(w, http.StatusOK, token)
 }
 
-func SignIn(username, password string) (string, error) {
+func (server *Server) SignIn(username, password string) (string, error) {
 
 	var err error
 

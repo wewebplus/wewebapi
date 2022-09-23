@@ -6,12 +6,10 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/wewebplus/wewebapi/db"
-	router "github.com/wewebplus/wewebapi/routes"
+	"github.com/wewebplus/wewebapi/controller"
 )
 
-var server = db.Server{}
-var route = router.Routes{}
+var server = controller.Server{}
 
 func Run() {
 
@@ -23,7 +21,6 @@ func Run() {
 	}
 
 	server.Initialize(os.Getenv("DB_DRIVER"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
-	route.Initialize()
-	server.Run("api.localhost:8080")
+	server.Run(os.Getenv("API_URL"))
 
 }

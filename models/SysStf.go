@@ -11,7 +11,7 @@ import (
 
 	"github.com/badoux/checkmail"
 	"github.com/jinzhu/gorm"
-	"github.com/wewebplus/wewebapi/core/types"
+	"github.com/wewebplus/wewebapi/types"
 	"golang.org/x/crypto/bcrypt"
 )
 

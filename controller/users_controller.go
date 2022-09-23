@@ -1,4 +1,4 @@
-package handler
+package controller
 
 import (
 	"net/http"
@@ -6,15 +6,12 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
-	"github.com/wewebplus/wewebapi/core/models"
-	"github.com/wewebplus/wewebapi/core/types"
-	"github.com/wewebplus/wewebapi/db"
+	"github.com/wewebplus/wewebapi/models"
 	"github.com/wewebplus/wewebapi/responses"
+	"github.com/wewebplus/wewebapi/types"
 )
 
-var server = db.Server{}
-
-func CreateUser(c echo.Context) error {
+func (server *Server) CreateUser(c echo.Context) error {
 	user := types.SysStf{}
 	if err := c.Bind(&user); err != nil {
 		log.Error(err)
@@ -36,7 +33,7 @@ func CreateUser(c echo.Context) error {
 	return c.JSON(http.StatusCreated, data)
 }
 
-func GetUsers(c echo.Context) error {
+func (server *Server) GetUsers(c echo.Context) error {
 
 	user := types.SysStf{}
 	if err := c.Bind(&user); err != nil {
@@ -50,7 +47,7 @@ func GetUsers(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-func GetUser(c echo.Context) error {
+func (server *Server) GetUser(c echo.Context) error {
 	uid, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, responses.ParseStatus("REQ_INVALID", "ID invalid"))
@@ -63,7 +60,7 @@ func GetUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-func UpdateUser(c echo.Context) error {
+func (server *Server) UpdateUser(c echo.Context) error {
 
 	uid, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -90,7 +87,7 @@ func UpdateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, data)
 }
 
-func DeleteUser(c echo.Context) error {
+func (server *Server) DeleteUser(c echo.Context) error {
 	uid, err := strconv.Atoi(c.Param("id"))
 	user := types.SysStf{}
 	if err != nil {

@@ -1,4 +1,4 @@
-package handler
+package controller
 
 import (
 	"net/http"
@@ -6,6 +6,6 @@ import (
 	"github.com/labstack/echo"
 )
 
-func Home(c echo.Context) {
+func (server *Server) Home(c echo.Context) {
 	c.JSON(http.StatusOK, "Welcome To This Awesome API")
 }

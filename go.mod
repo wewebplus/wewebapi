@@ -11,11 +11,9 @@ require (
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.1
 	golang.org/x/crypto v0.0.0-20220829220503-c86fa9a7ed90
-	honnef.co/go/tools v0.3.3
 )
 
 require (
-	github.com/BurntSushi/toml v0.4.1 // indirect
 	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/lib/pq v1.1.1 // indirect
@@ -27,5 +25,4 @@ require (
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/sys v0.0.0-20211103235746-7861aae1554b // indirect
 	golang.org/x/text v0.3.7 // indirect
-	golang.org/x/tools v0.1.11-0.20220513221640-090b14e8501f // indirect
 )
